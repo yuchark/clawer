@@ -20,14 +20,16 @@ def get_contents(keyset):
 	assert isinstance(keyset, dict), 'Dict Content Error'
 	for key in keyset.keys():
 		if ('/' in key) or key == '.com':
-			continue
+			keym = key.replace('', '/').replace('', '.com')
+		else:
+			keym = key
 		tmpc = keyset[key]
 		if  not os.path.exists(key):
 			os.mkdir(key)
 		for i,item in enumerate(tmpc):
 			assert len(item) == 2, 'Error in Element Length'
 			urlsite = item[1]
-			with open('%s/%d.txt'%(key,i), 'w') as filout:
+			with open('%s/%d.txt'%(keym,i), 'w') as filout:
 				try:
 					print('Clawing Site: %s'%urlsite)		  
 					req = urllib2.Request(urlsite, headers=hdr)
